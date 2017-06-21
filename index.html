@@ -1,0 +1,44 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Flickr Api</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
+
+        <link rel='stylesheet' href='fonts/pe-icon-7-stroke/css/peicon7stroke.css'/>
+        <link rel="stylesheet" href="styles.css">
+
+    </head>
+    <body>
+
+        <nav>
+          <div id="nav-content">
+            <div id="left-menu">
+              <a onclick="home()"><span class="pe-7s-helm font-icon"></span></a>
+              <a onclick="gallery()"><span>Gallery</span></a>
+            </div>
+            <div id="right-menu">
+              <a onclick="searchBar()" id="search-icon"><span class="pe-7s-search font-icon"></span></a>
+            </div>
+            <div id="search-field" class="hide">
+              <i class="pe-7s-search font-icon"></i>
+              <form id="search-form">
+                <input id="search-input" type="search"
+                autocorrect="off" spellcheck="false" autocomplete="off"
+                placeholder="Search Flickr.com">
+              </form>
+              <i id="search-close" class="pe-7s-close font-icon"></i>
+            </div>
+          </div>
+        </nav>
+
+        <div id="content"></div>
+
+        <script src="main.js"></script>
+        <script src="searchbar.js"></script>
+
+    </body>
+</html>
