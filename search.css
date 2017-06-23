@@ -36,6 +36,12 @@
   z-index: 2;
   display: flex;
   align-items: flex-end;
+
+  -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+  -moz-user-select: none; /* mozilla browsers */
+  -khtml-user-select: none; /* webkit (konqueror) browsers */
+  -ms-user-select: none; /* IE10+ */
+  user-select: none;
 }
 
 .image-overlay:hover{
@@ -64,6 +70,10 @@
   bottom: 10px;
   cursor: pointer;
   opacity: 0.8;
+}
+
+.image-overlay i.success:hover{
+  color: #ff7a7a;
 }
 
 .image-overlay i.font-icon:hover{

@@ -33,13 +33,9 @@ function closeSearch(){
 
 function searchFormEvent(e){
   e.preventDefault()
-
-  console.log(searchInput.value)
-
-  fetchData(searchInput.value)
-  .then(content => searchResult(content))
-  .catch(err => console.log(err) /* Handle error */)
-
-  searchInput.value = ''
-  closeSearch()
+  if(searchInput.value){
+    searchNav(searchInput.value)
+    searchInput.value = ''
+    closeSearch()
+  }
 }

@@ -1,32 +1,20 @@
 let galleryArr = [],
     imgArr = []
 
-let searchURL = 'https://api.flickr.com/services/rest/'+
-                '?method=flickr.photos.search&format=json&nojsoncallback=?'+
-                '&sort=interestingness-desc&per_page=30'+
-                '&api_key=4ca5d32fc4f8ce65c4b6e3fd1089c50c&tags='
 
-function fetchData(tag){
-  if(tag){
-    let tagURL = searchURL + tag.replace(/\ /g, '+'),
-        imgObj = {}
-
-    console.log(tagURL)
+function fetchData(tagURL){
+  if(tagURL){
     return fetch(tagURL)
     .then(res => res.json())
-    .then(data => createImgArr(data))
-    .then(imagesArray => createImageElement(imagesArray))
   }
 }
 
 function createImgArr(data){
   imgArr = data.photos.photo.map((photo) => {
     imgObj = {
+      addedToGallery: false,
       id:     photo.id,
       title:  photo.title,
-      square:  'https://farm'+photo.farm+
-              '.staticflickr.com/'+photo.server+
-              '/'+photo.id+'_'+photo.secret+'_q.jpg',
       small:  'https://farm'+photo.farm+
               '.staticflickr.com/'+photo.server+
               '/'+photo.id+'_'+photo.secret+'_m.jpg',
@@ -40,4 +28,55 @@ function createImgArr(data){
     return imgObj
   })
   return imgArr
+}
+
+function createImgElements(imagesArray){
+  let wrapper = document.createElement('div')
+  wrapper.id = 'search-wrapper'
+
+  imagesArray.forEach((image) => {
+    let imageContainer = document.createElement('div'),
+        imageOverlay = document.createElement('div'),
+        titleSpan = document.createElement('span'),
+        galleryIcon = document.createElement('i')
+
+    imageContainer.className = 'search-image'
+    imageOverlay.className = 'image-overlay'
+    titleSpan.textContent = image.title
+    let img = new Image()
+    img.src = image.medium
+    galleryIcon.className = 'pe-7s-photo-gallery font-icon'
+
+    // check if image is in the gallery
+    galleryArr.forEach((item) => {
+      if(item.id === image.id){
+        image.addedToGallery = true
+        galleryIcon.className = 'pe-7s-check font-icon success'
+      }
+    })
+
+    galleryIcon.addEventListener('click', () => {
+      if(!image.addedToGallery){
+        image.addedToGallery = true
+        galleryIcon.className = 'pe-7s-check font-icon success'
+        galleryArr.push(image)
+      }else{
+        galleryArr = galleryArr.filter((item) => {
+          return item.id != image.id
+        })
+        if(location.pathname === '/gallery'){
+          galleryNav()
+        }
+        galleryIcon.className = 'pe-7s-photo-gallery font-icon'
+        image.addedToGallery = false
+      }
+    })
+    imageOverlay.appendChild(titleSpan)
+    imageOverlay.appendChild(galleryIcon)
+    imageContainer.appendChild(imageOverlay)
+    imageContainer.appendChild(img)
+    wrapper.appendChild(imageContainer)
+  })
+
+  return wrapper
 }

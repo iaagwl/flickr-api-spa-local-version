@@ -1,3 +1,37 @@
+function render(name) {
+  const contentDiv = document.getElementById("content")
+  contentDiv.innerHTML = ''
+  contentDiv.appendChild(name)
+}
+
+// Handle browser history
+let historyRoutes = [],
+    contentIdCounter = 1
+
+function addToHistory(DOMContent){
+  contentIdCounter++
+  historyState = {content_id: contentIdCounter, content: DOMContent}
+  historyRoutes.push(historyState)
+  return historyState.content_id
+}
+
+function getFromHistory(content_id){
+  route = historyRoutes.filter(item =>{
+    return item.content_id === content_id
+  })
+  return route[0]
+}
+
+window.onpopstate = function (event) {
+  let content = ''
+  if(event.state) {
+    content = getFromHistory(event.state.content_id)
+  }
+  if(content.content){
+    render(content.content)
+  }
+}
+
 // Set initial routes
 ;(function(){
   if(location.pathname === '/'){
@@ -9,67 +43,68 @@
   if(location.pathname === '/gallery'){
     gallery()
   }
-  if(location.pathname === '/newest'){
-    newest()
-  }
   if(location.pathname === '/popular'){
-    popular()
+    popularNav()
+  }
+  if(location.pathname === '/recent'){
+    recentNav()
   }
 })()
 
+
 // Routes
 function home() {
+  let homeContent = document.createElement('h1')
+  homeContent.textContent = 'Home-content'
+
+  content_id = addToHistory(homeContent)
   history.pushState({
-    content_id: 1,
+    content_id: content_id,
     content: 'Home-content'
   }, null, "/")
-  render(history.state.content)
+  render(homeContent)
 }
 
-function gallery() {
+function gallery(content) {
+  content_id = addToHistory(content)
+
   history.pushState({
-    content_id: 2,
+    content_id: content_id,
     content: 'Gallery-content'
   }, null, "/gallery")
 
-  render(history.state.content)
+  render(content)
 }
 
-function newest() {
-  history.pushState({
-    content_id: 3,
-    content: 'Newest-content'
-  }, null, "/newest")
+function recent(content) {
+  content_id = addToHistory(content)
 
-  render(history.state.content)
-}
-function popular() {
   history.pushState({
-    content_id: 4,
+    content_id: content_id,
+    content: 'Popular-content'
+  }, null, "/recent")
+
+  render(content)
+}
+
+function popular(content) {
+  content_id = addToHistory(content)
+
+  history.pushState({
+    content_id: content_id,
     content: 'Popular-content'
   }, null, "/popular")
 
-  render(history.state.content)
+  render(content)
 }
 
 function searchResult(content) {
+  content_id = addToHistory(content)
+
   history.pushState({
-    content_id: 5,
-    content: content
+    content_id: content_id,
+    content: 'Search Content'
   }, null, "/search")
 
-  render(history.state.content)
-}
-
-function render(name) {
-  document.getElementById("content").innerHTML = name
-}
-
-// Handle browser history
-window.onpopstate = function (event) {
-  let content = ''
-  if(event.state) {
-    content = event.state.content
-  }
   render(content)
 }

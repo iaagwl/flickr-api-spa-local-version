@@ -53,6 +53,7 @@ nav{
   display: flex;
   justify-content: space-between;
   width: 60%;
+  transition: opacity 0.3s ease-in;
 }
 
 #right-menu{
