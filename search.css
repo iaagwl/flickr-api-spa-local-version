@@ -80,3 +80,41 @@
   opacity: 1;
   transition: opacity 0.1s ease;
 }
+
+
+#img-modal{
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 44px;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 3;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+  -moz-user-select: none; /* mozilla browsers */
+  -khtml-user-select: none; /* webkit (konqueror) browsers */
+  -ms-user-select: none; /* IE10+ */
+  user-select: none;
+}
+
+#img-modal img{
+  display: block;
+  max-height: 80%;
+  max-width: 80%;
+  margin-bottom: 44px;
+}
+
+.display-modal{
+  display: flex;
+}
+
+.hide-modal{
+  display: none;
+}
+
+body.modal-open{
+  overflow: hidden;
+}

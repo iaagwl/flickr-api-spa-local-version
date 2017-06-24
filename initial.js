@@ -5,7 +5,7 @@ const searchField = document.getElementById('search-field'),
       searchClose = document.getElementById('search-close'),
       leftMenu = document.getElementById('left-menu'),
       imgModal = document.getElementById('img-modal'),
-      modalContainer = document.getElementById('modal-container')
+      bodyElement = document.getElementsByTagName("BODY")[0]
 
 function searchBar(){
   openSearch()
@@ -42,10 +42,12 @@ function searchFormEvent(e){
   }
 }
 
-
-
-
 imgModal.addEventListener('click', () =>{
-  modalContainer.innerHTML = ''
-  imgModal.className = 'hide-modal'
+  removeModal()
 })
+
+function removeModal(){
+  bodyElement.className = ''
+  imgModal.innerHTML = ''
+  imgModal.className = 'hide-modal'
+}

@@ -38,13 +38,13 @@ function createImgElements(imagesArray){
     let imageContainer = document.createElement('div'),
         imageOverlay = document.createElement('div'),
         titleSpan = document.createElement('span'),
-        galleryIcon = document.createElement('i')
+        galleryIcon = document.createElement('i'),
+        img = new Image()
 
+    img.src = image.medium
     imageContainer.className = 'search-image'
     imageOverlay.className = 'image-overlay'
     titleSpan.textContent = image.title
-    let img = new Image()
-    img.src = image.medium
     galleryIcon.className = 'pe-7s-photo-gallery font-icon'
 
     // check if image is in the gallery
@@ -55,7 +55,11 @@ function createImgElements(imagesArray){
       }
     })
 
-    galleryIcon.addEventListener('click', () => {
+    galleryIcon.addEventListener('click', (e) => {
+      if (!e) var e = window.event
+        e.cancelBubble = true
+        if (e.stopPropagation) e.stopPropagation()
+
       if(!image.addedToGallery){
         image.addedToGallery = true
         galleryIcon.className = 'pe-7s-check font-icon success'
@@ -71,6 +75,18 @@ function createImgElements(imagesArray){
         image.addedToGallery = false
       }
     })
+
+    imageOverlay.addEventListener('click', () => {
+      let imgModal = document.getElementById('img-modal'),
+          bodyElement = document.getElementsByTagName("BODY")[0],
+          img = new Image()
+
+      img.src = image.large
+      imgModal.appendChild(img)
+      imgModal.className = 'display-modal'
+      bodyElement.className = 'modal-open'
+    })
+
     imageOverlay.appendChild(titleSpan)
     imageOverlay.appendChild(galleryIcon)
     imageContainer.appendChild(imageOverlay)

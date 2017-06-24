@@ -1,8 +1,13 @@
 const API_KEY = '4ca5d32fc4f8ce65c4b6e3fd1089c50c'
 
+function galleryPreNav(){
+  galleryNav()
+  window.scrollTo(0, 0)
+}
+
 function galleryNav(){
-  //gallery()
   let galleryElement = createImgElements(galleryArr)
+  removeModal()
   gallery(galleryElement)
 }
 
@@ -15,7 +20,11 @@ function popularNav(){
   fetchData(popularURL)
   .then(data => createImgArr(data))
   .then(imagesArray => createImgElements(imagesArray))
-  .then(DOMContent => popular(DOMContent))
+  .then(DOMContent => {
+    removeModal()
+    popular(DOMContent)
+    window.scrollTo(0, 0)
+  })
   .catch(err => console.log(err) /* Handle error */)
 }
 
@@ -28,7 +37,11 @@ function recentNav(){
   fetchData(recentURL)
   .then(data => createImgArr(data))
   .then(imagesArray => createImgElements(imagesArray))
-  .then(DOMContent => recent(DOMContent))
+  .then(DOMContent => {
+    removeModal()
+    recent(DOMContent)
+    window.scrollTo(0, 0)
+  })
   .catch(err => console.log(err) /* Handle error */)
 }
 
@@ -38,10 +51,15 @@ function searchNav(input){
                   '&sort=interestingness-desc&per_page=30'+
                   '&api_key='+API_KEY+'&tags='
 
+
   searchURL += input.replace(/\ /g, '+')
   fetchData(searchURL)
   .then(data => createImgArr(data))
   .then(imagesArray => createImgElements(imagesArray))
-  .then(DOMContent => searchResult(DOMContent))
+  .then(DOMContent => {
+    removeModal()
+    searchResult(DOMContent)
+    window.scrollTo(0, 0)
+  })
   .catch(err => console.log(err) /* Handle error */)
 }
