@@ -1,4 +1,15 @@
-const API_KEY = '4ca5d32fc4f8ce65c4b6e3fd1089c50c'
+let galleryNavEl = document.getElementById('gallery-nav'),
+    popularNavEl = document.getElementById('popular-nav'),
+    recentNavEl = document.getElementById('recent-nav')
+
+function homeNav(){
+  let sliderElement = createSlider()
+  home(sliderElement.slider)
+  initSlider(sliderElement)
+  removeModal()
+  activeNav()
+  window.scrollTo(0, 0)
+}
 
 function galleryPreNav(){
   galleryNav()
@@ -9,6 +20,7 @@ function galleryNav(){
   let galleryElement = createImgElements(galleryArr)
   removeModal()
   gallery(galleryElement)
+  activeNav(galleryNavEl)
 }
 
 function popularNav(){
@@ -23,6 +35,7 @@ function popularNav(){
   .then(DOMContent => {
     removeModal()
     popular(DOMContent)
+    activeNav(popularNavEl)
     window.scrollTo(0, 0)
   })
   .catch(err => console.log(err) /* Handle error */)
@@ -40,6 +53,7 @@ function recentNav(){
   .then(DOMContent => {
     removeModal()
     recent(DOMContent)
+    activeNav(recentNavEl)
     window.scrollTo(0, 0)
   })
   .catch(err => console.log(err) /* Handle error */)
@@ -59,7 +73,17 @@ function searchNav(input){
   .then(DOMContent => {
     removeModal()
     searchResult(DOMContent)
+    activeNav()
     window.scrollTo(0, 0)
   })
   .catch(err => console.log(err) /* Handle error */)
+}
+
+function activeNav(navEl){
+  galleryNavEl.className = ''
+  popularNavEl.className = ''
+  recentNavEl.className = ''
+  if(navEl){
+    navEl.className = 'active'
+  }
 }
