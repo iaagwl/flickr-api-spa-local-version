@@ -1,7 +1,8 @@
-function render(name) {
+// renders an element to the page
+function render(element) {
   const contentDiv = document.getElementById('content')
   contentDiv.innerHTML = ''
-  contentDiv.appendChild(name)
+  contentDiv.appendChild(element)
 }
 
 // Handle browser history
@@ -22,6 +23,7 @@ function getFromHistory(content_id){
   return route[0]
 }
 
+// handles forward and backwards browser navigation
 window.onpopstate = function (event) {
   let content = {}
   if(event.state) {
