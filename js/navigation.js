@@ -26,6 +26,7 @@ function galleryNav(){
                         createImgElements(galleryArr) :
                         emptyMessage('Your gallery is currently empty :(')
 
+  removeModal()
   contentDiv.classList.remove('loading')
   gallery(galleryElement)
   activeNav(galleryNavEl)
